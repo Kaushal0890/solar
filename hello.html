@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAT GREENTECH PVT.</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        font-family: Arial, sans-serif;
+        background: url("img/sun.jpg") no-repeat center center/cover;
+      }
+
+      .top-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        padding: 10px 20px;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo-img {
+        height: 40px;
+        margin-right: 10px;
+      }
+
+      .logo-text {
+        color: green;
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      .nav-links a {
+        position: relative;
+        margin: 0 10px;
+        text-decoration: none;
+        color: green;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0%;
+        height: 2px;
+        background-color: green;
+        left: 0;
+        bottom: -4px;
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .menu-toggle {
+        display: none;
+        font-size: 28px;
+        cursor: pointer;
+      }
+
+      .menu-toggle.hide {
+        display: none !important;
+      }
+
+      .slide-menu {
+        position: fixed;
+        top: 60px;
+        right: -250px;
+        width: 250px;
+        background: #f8f8f8;
+        height: 100%;
+        transition: right 0.3s ease;
+        z-index: 99;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+        padding-top: 20px;
+      }
+
+      .slide-menu.open {
+        right: 0;
+      }
+
+      .slide-menu .close-btn {
+        text-align: right;
+        padding: 10px 20px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #333;
+      }
+
+      .slide-menu a {
+        position: relative;
+        display: block;
+        padding: 15px 20px;
+        text-decoration: none;
+        color: green;
+        font-weight: bold;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .slide-menu a::after {
+        content: "";
+        position: absolute;
+        width: 0%;
+        height: 2px;
+        background-color: green;
+        left: 20px;
+        bottom: 8px;
+        transition: width 0.3s ease;
+      }
+
+      .slide-menu a:hover::after {
+        width: calc(100% - 40px);
+      }
+
+      .home {
+        color: white;
+        height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        padding-top: 80px;
+      }
+
+      .home h1 {
+        font-size: 2.5em;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 10px 20px;
+        border-radius: 10px;
+      }
+
+      .home h1 b {
+        color: green;
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .home h1 b:hover {
+        color: #ff9800;
+        transform: scale(1.2);
+      }
+
+      .book-slot-container {
+        text-align: center;
+        margin: 40px 0;
+      }
+
+      .book-slot-btn {
+        background-color: #1a8f6d;
+        color: white;
+        padding: 15px 30px;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        text-decoration: none;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .book-slot-btn:hover {
+        background-color: #138f58;
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+      }
+
+      .contact-section {
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 60px 20px;
+        text-align: center;
+      }
+
+      .contact-section h2 {
+        font-size: 2em;
+        margin-bottom: 20px;
+        color: green;
+      }
+
+      #contactForm {
+        max-width: 500px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      #contactForm input,
+      #contactForm textarea {
+        padding: 12px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      #contactForm button {
+        background-color: #1a8f6d;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .footer {
+        background-color: #e6f7ff;
+        padding: 40px 20px;
+        display: flex;
+        font-size: large;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        border-top: 1px solid #ccc;
+      }
+
+      .footer-column {
+        flex: 1;
+        min-width: 250px;
+        margin: 10px;
+      }
+
+      .footer img {
+        width: 150px;
+        margin-bottom: 15px;
+      }
+
+      .footer h3 {
+        margin-bottom: 15px;
+        color: #000;
+      }
+
+      .footer p,
+      .footer a {
+        color: #333;
+        line-height: 1.6;
+        text-decoration: none;
+        font-size: 16px;
+      }
+
+      .footer a:hover {
+        color: #1bc41b;
+      }
+
+      .footer .whatsapp {
+        color: #1bc41b;
+        font-weight: bold;
+      }
+
+      #FooterS {
+        background: #1a8f6d;
+        color: white;
+        text-align: center;
+        padding: 10px;
+      }
+
+      marquee {
+        color: green;
+        font-weight: bold;
+        background: #f0f0f0;
+        padding: 10px;
+        font-size: 16px;
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+
+        .footer {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .footer-column {
+          margin: 20px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top-header">
+      <div class="logo-section">
+        <img src="img/nlg.png" alt="Logo" class="logo-img" />
+        <span class="logo-text">SAT GREENTECH PVT.</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="about.html">About</a>
+        <a href="project.html">Projects </a>
+        <a href="services.html">Services</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    </header>
+
+    <div class="slide-menu" id="slide-menu">
+      <div class="close-btn" id="close-btn">&times;</div>
+      <a href="#">Home</a>
+      <a href="about.html">About</a>
+      <a href="project.html">Projects</a>
+      <a href="services.html">Services</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <section class="home">
+      <h1>Welcome to <b>SAT Greentech</b> Pvt. Ltd</h1>
+      <div class="book-slot-container">
+        <a href="bookslot.html" class="book-slot-btn"
+          >Book Your Slot (Free Site Visit)</a
+        >
+      </div>
+    </section>
+
+    <section class="contact-section">
+      <h2>Contact Us</h2>
+      <form id="contactForm">
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Your Email" required />
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+
+    <marquee behavior="alternate" direction="left" scrollamount="8">
+      🌞 Get up to ₹78,000 subsidy on solar installation with PM Surya Ghar
+      Yojana. &nbsp;&nbsp;&nbsp; 🏠 Empower your home with free solar energy and
+      reduce your electricity bill to zero! &nbsp;&nbsp;&nbsp; ⚡ Make your home
+      energy-independent with clean, green solar power &nbsp;&nbsp;&nbsp; 🏢
+      Commercial solar installations are not eligible for subsidy, but offer
+      long-term savings.
+    </marquee>
+
+    <footer class="footer">
+      <div class="footer-column">
+        <img src="img/nlg.png" alt="Company Logo" />
+        <p>SAT Greentech Pvt Ltd is built on years of experience.</p>
+        <p>
+          "SAT GREENTECH PVT. LTD. — Rapid Growth, Reliable Solar Solutions."
+        </p>
+      </div>
+      <div class="footer-column">
+        <h3>Address</h3>
+        <p>
+          <a href="https://maps.app.goo.gl/Kysvnybmj4gJKp8a7"
+            >1st Floor, Sager Book Store, Bhesan, Junagadh</a
+          >
+        </p>
+        <p>
+          Email:
+          <a href="mailto:info@satgreentech25.com">info@satgreentech25.com</a>
+        </p>
+        <p>
+          <a href="https://wa.me/917359011571" target="_blank"
+            >+91 7359011571</a
+          >
+        </p>
+        <p>
+          <a href="https://wa.me/918758957741" target="_blank"
+            >+91 8758957741</a
+          >
+        </p>
+      </div>
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <p><a href="#">Home</a></p>
+        <p><a href="about.html">About</a></p>
+        <p><a href="project.html">Projects</a></p>
+        <p><a href="services.html">Services</a></p>
+        <p><a href="#">Contact</a></p>
+      </div>
+    </footer>
+
+    <div id="FooterS">&copy; SAT GREENTECH PVT. 2025. All Rights Reserved.</div>
+
+    <script>
+      const toggleBtn = document.getElementById("menu-toggle");
+      const slideMenu = document.getElementById("slide-menu");
+      const closeBtn = document.getElementById("close-btn");
+
+      toggleBtn.addEventListener("click", () => {
+        slideMenu.classList.add("open");
+        toggleBtn.classList.add("hide");
+      });
+
+      closeBtn.addEventListener("click", () => {
+        slideMenu.classList.remove("open");
+        toggleBtn.classList.remove("hide");
+      });
+
+      const menuLinks = slideMenu.querySelectorAll("a");
+      menuLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          slideMenu.classList.remove("open");
+          toggleBtn.classList.remove("hide");
+        });
+      });
+
+      const contactForm = document.getElementById("contactForm");
+      contactForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        alert("✅ Thank you for your message! We’ll get back to you soon.");
+        contactForm.reset();
+      });
+    </script>
+  </body>
+</html>
